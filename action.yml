@@ -1,0 +1,78 @@
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+name: 'test-patch'
+author: 'Apache Software Foundation'
+description: 'Apache Yetus precommit patch testing'
+branding:
+  color: purple
+  icon: feather
+inputs:
+  basedir:
+    description: 'Directory location of source'
+    required: true
+    default: "${GITHUB_WORKSPACE}"
+  continuousimprovement:
+    description: 'Pass branches that would otherwise fail'
+    default: false
+  patchdir:
+    description: 'Directory location of logs, temp space, etc'
+    required: true
+    default: "/tmp/yetus"
+  githubtoken:
+    description: 'GitHub token to use'
+    required: true
+    default: ''
+  buildtool:
+    description: 'Name of build tool plug-in to use'
+    default: "nobuild"
+  excludes:
+    description: 'Filename of files/directories to ignore'
+    default: '.yetus-excludes.txt'
+  javahome:
+    description: 'Location of the JDK to use'
+    default: '/usr/lib/jvm/java-11-openjdk-amd64'
+  plugins:
+    description: 'Fine grained control over plug-ins'
+    default: all,-asflicense,-author,-findbugs,-gitlabcilint,-shelldocs
+  pylint:
+    description: 'Major Python version to use for pylint: pylint2 or pylint3'
+    default: pylint3
+  pip:
+    description: 'Major Python version to use for pip: pip2 or pip3'
+    default: pip3
+  reapermode:
+    description: 'How to handle stale surefire tests'
+    default: kill
+runs:
+  using: 'docker'
+  image: apache/yetus:main
+  args:
+    - test-patch
+    - --basedir=${{ inputs.basedir }}
+    - --brief-report-file=${{ inputs.patchdir }}/brief.txt
+    - --build-tool=${{ inputs.buildtool }}
+    - --console-report-file=${{ inputs.patchdir }}/console.txt
+    - --continuous-improvement=${{ inputs.continuousimprovement }}
+    - --excludes=${{ inputs.excludes }}
+    - --github-token=${{ inputs.githubtoken }}
+    - --html-report-file=${{ inputs.patchdir }}/report.html
+    - --junit-report-xml=${{ inputs.patchdir }}/junit-report.xml
+    - --patch-dir=${{ inputs.patchdir }}
+    - --plugins=${{ inputs.plugins }}
+    - --pylint-pip-cmd=${{ inputs.pip }}
+    - --pylint-requirements=true
+    - --pylint=${{ inputs.pylint }}
+    - --reapermode=${{ inputs.reapermode }}
