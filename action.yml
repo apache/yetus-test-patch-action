@@ -58,7 +58,7 @@ inputs:
     default: kill
 runs:
   using: 'docker'
-  image: apache/yetus:main
+  image: docker://apache/yetus:main
   args:
     - test-patch
     - --basedir=${{ inputs.basedir }}
