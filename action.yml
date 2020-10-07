@@ -24,38 +24,54 @@ inputs:
     description: 'Directory location of source'
     required: true
     default: "${GITHUB_WORKSPACE}"
+  blankseolignorefile:
+    descipription: 'regex list of files to ignore blanks EOL'
+    default: .yetus/blanks-eol.txt
+  blankstabsignorefile:
+    description: 'regex list of files to ignore tabs'
+    default: .yetus/blanks-tabs.txt
+  bufbasedir:
+    description: 'Location where to run buf'
+    default: .
+  buildtool:
+    description: 'Name of build tool plug-in to use'
+    default: "nobuild"
   continuousimprovement:
     description: 'Pass branches that would otherwise fail'
     default: false
-  patchdir:
-    description: 'Directory location of logs, temp space, etc'
-    required: true
-    default: "/tmp/yetus"
+  excludes:
+    description: 'Filename of files/directories to ignore'
+    default: '.yetus/excludes.txt'
   githubtoken:
     description: 'GitHub token to use'
     required: true
     default: ''
-  buildtool:
-    description: 'Name of build tool plug-in to use'
-    default: "nobuild"
-  excludes:
-    description: 'Filename of files/directories to ignore'
-    default: '.yetus-excludes.txt'
   javahome:
     description: 'Location of the JDK to use'
     default: '/usr/lib/jvm/java-11-openjdk-amd64'
-  plugins:
-    description: 'Fine grained control over plug-ins'
-    default: all,-asflicense,-author,-findbugs,-gitlabcilint,-shelldocs
-  pylint:
-    description: 'Major Python version to use for pylint: pylint2 or pylint3'
-    default: pylint3
+  patchdir:
+    description: 'Directory location of logs, temp space, etc'
+    required: true
+    default: "/tmp/yetus"
   pip:
     description: 'Major Python version to use for pip: pip2 or pip3'
     default: pip3
+  plugins:
+    description: 'Fine grained control over plug-ins'
+    default: all,-asflicense,-author,-findbugs,-golangcilint,-shelldocs
+  project:
+    description: 'Name of project to put on reports, default personality, etc'
+    default: unknown
+  pylint:
+    description: 'Major Python version to use for pylint: pylint2 or pylint3'
+    default: pylint3
   reapermode:
     description: 'How to handle stale surefire tests'
     default: kill
+  reviveconfig:
+    description: 'Configuration file for revive'
+    default: .revive.toml
+
 runs:
   using: 'docker'
   image: docker://apache/yetus:main
@@ -63,6 +79,7 @@ runs:
     - test-patch
     - --basedir=${{ inputs.basedir }}
     - --brief-report-file=${{ inputs.patchdir }}/brief.txt
+    - --buf-basedir=${{ inputs.bufbasedir }}
     - --build-tool=${{ inputs.buildtool }}
     - --console-report-file=${{ inputs.patchdir }}/console.txt
     - --continuous-improvement=${{ inputs.continuousimprovement }}
@@ -72,7 +89,11 @@ runs:
     - --junit-report-xml=${{ inputs.patchdir }}/junit-report.xml
     - --patch-dir=${{ inputs.patchdir }}
     - --plugins=${{ inputs.plugins }}
+    - --project=${{ inputs.project }}
     - --pylint-pip-cmd=${{ inputs.pip }}
     - --pylint-requirements=true
     - --pylint=${{ inputs.pylint }}
     - --reapermode=${{ inputs.reapermode }}
+    - --revive-config=${{ inputs.reviveconfig }}
+    - --blanks-eol-ignore-file=${{ inputs.blankseolignorefile }}
+    - --blanks-tabs-ignore-file=${{ inputs.blankstabsignorefile }}
