@@ -18,7 +18,8 @@
 # Apache Yetus test-patch
 
 This action enables Apache Yetus' change testing facilities via GitHub actions
-without significant configuration. To use it, add the following work flow:
+without significant configuration. For simple usage (with bleeding edge versions),
+add the following work flow:
 
 ```yaml
 ---
@@ -38,11 +39,12 @@ jobs:
           path: src
           fetch-depth: 0
       - name: Apache Yetus test-patch
-        uses: apache/yetus-test-patch-action@v1
+        uses: apache/yetus-test-patch-action@main
         with:
           basedir: ./src
           patchdir: ./out
           buildtool: nobuild
+          githubtoken: ${{ secrets.GITHUB_TOKEN }}
       - name: Artifact output
         if: ${{ always() }}
         uses: actions/upload-artifact@v2
@@ -51,4 +53,5 @@ jobs:
           path: ${{ github.workspace }}/out
 ```
 
-For more information, see the [Apache Yetus Website](https://yetus.apache.org).
+For more complex usage or just more information in general, see the
+[Apache Yetus Website](https://yetus.apache.org/documentation/in-progress/precommit/robots/githubactions/).
