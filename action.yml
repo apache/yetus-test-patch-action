@@ -71,6 +71,9 @@ inputs:
   reviveconfig:
     description: 'Configuration file for revive'
     default: .revive.toml
+  testsfilter:
+    description: 'Only warn on these test plug-ins'
+    default: ''
 
 runs:
   using: 'docker'
@@ -78,6 +81,8 @@ runs:
   args:
     - test-patch
     - --basedir=${{ inputs.basedir }}
+    - --blanks-eol-ignore-file=${{ inputs.blankseolignorefile }}
+    - --blanks-tabs-ignore-file=${{ inputs.blankstabsignorefile }}
     - --brief-report-file=${{ inputs.patchdir }}/brief.txt
     - --buf-basedir=${{ inputs.bufbasedir }}
     - --build-tool=${{ inputs.buildtool }}
@@ -86,6 +91,7 @@ runs:
     - --excludes=${{ inputs.excludes }}
     - --github-token=${{ inputs.githubtoken }}
     - --html-report-file=${{ inputs.patchdir }}/report.html
+    - --ignore-unknown-options=true
     - --junit-report-xml=${{ inputs.patchdir }}/junit-report.xml
     - --patch-dir=${{ inputs.patchdir }}
     - --plugins=${{ inputs.plugins }}
@@ -94,6 +100,6 @@ runs:
     - --pylint-requirements=true
     - --pylint=${{ inputs.pylint }}
     - --reapermode=${{ inputs.reapermode }}
+    - --report-unknown-options=false
     - --revive-config=${{ inputs.reviveconfig }}
-    - --blanks-eol-ignore-file=${{ inputs.blankseolignorefile }}
-    - --blanks-tabs-ignore-file=${{ inputs.blankstabsignorefile }}
+    - --tests-filter=${{ inputs.testsfilter }}
