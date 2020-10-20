@@ -58,7 +58,8 @@ inputs:
     default: pip3
   plugins:
     description: 'Fine grained control over plug-ins'
-    default: all,-asflicense,-author,-findbugs,-golangcilint,-shelldocs
+    default: 'all,-asflicense,-author,-findbugs,-gitlab,
+      -golangcilint,-jira,-shelldocs'
   project:
     description: 'Name of project to put on reports, default personality, etc'
     default: unknown
