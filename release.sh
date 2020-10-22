@@ -71,7 +71,7 @@ git fetch origin
 git rebase origin/main
 git checkout -b "${JIRAISSUE}"
 
-docker run -i \
+docker run -i --rm \
   -v "${PWD}:/src" \
   -u "${USER_ID}" \
   "apache/yetus:main" \
