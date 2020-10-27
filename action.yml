@@ -59,7 +59,7 @@ inputs:
   plugins:
     description: 'Fine grained control over plug-ins'
     default: 'all,-asflicense,-author,-findbugs,-gitlab,
-      -golangcilint,-jira,-shelldocs'
+             -jira,-shelldocs'
   project:
     description: 'Name of project to put on reports, default personality, etc'
     default: unknown
