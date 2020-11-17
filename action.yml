@@ -53,9 +53,6 @@ inputs:
     description: 'Directory location of logs, temp space, etc'
     required: true
     default: "/tmp/yetus"
-  pip:
-    description: 'Major Python version to use for pip: pip2 or pip3'
-    default: pip3
   plugins:
     description: 'Fine grained control over plug-ins'
     default: 'all,-asflicense,-author,-findbugs,-gitlab,
@@ -63,9 +60,6 @@ inputs:
   project:
     description: 'Name of project to put on reports, default personality, etc'
     default: unknown
-  pylint:
-    description: 'Major Python version to use for pylint: pylint2 or pylint3'
-    default: pylint3
   reapermode:
     description: 'How to handle stale surefire tests'
     default: kill
@@ -97,9 +91,7 @@ runs:
     - --patch-dir=${{ inputs.patchdir }}
     - --plugins=${{ inputs.plugins }}
     - --project=${{ inputs.project }}
-    - --pylint-pip-cmd=${{ inputs.pip }}
     - --pylint-requirements=true
-    - --pylint=${{ inputs.pylint }}
     - --reapermode=${{ inputs.reapermode }}
     - --report-unknown-options=false
     - --revive-config=${{ inputs.reviveconfig }}
