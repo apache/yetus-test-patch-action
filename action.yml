@@ -72,7 +72,7 @@ inputs:
 
 runs:
   using: 'docker'
-  image: docker://apache/yetus:main
+  image: docker://ghcr.io/apache/yetus:main
   args:
     - test-patch
     - --basedir=${{ inputs.basedir }}
