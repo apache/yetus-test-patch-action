@@ -87,6 +87,7 @@ runs:
     - --github-token=${{ inputs.githubtoken }}
     - --html-report-file=${{ inputs.patchdir }}/report.html
     - --ignore-unknown-options=true
+    - --java-home=${{ inputs.javahome }}
     - --junit-report-xml=${{ inputs.patchdir }}/junit-report.xml
     - --patch-dir=${{ inputs.patchdir }}
     - --plugins=${{ inputs.plugins }}
