@@ -74,7 +74,7 @@ git checkout -b "${JIRAISSUE}"
 docker run -i --rm \
   -v "${PWD}:/src" \
   -u "${USER_ID}" \
-  "apache/yetus:main" \
+  "ghcr.io/apache/yetus:${VERSION}" \
     perl -pi -e "s,apache/yetus:main,apache/yetus:${VERSION}," /src/action.yml
 
 git commit -a -S -m "${JIRAISSUE}. Tag and release ${VERSION}"
