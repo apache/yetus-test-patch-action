@@ -38,7 +38,7 @@ jobs:
           githubtoken: ${{ secrets.GITHUB_TOKEN }}
       - name: Artifact output
         if: ${{ always() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: apacheyetuspatchdir
           path: ${{ github.workspace }}/out
