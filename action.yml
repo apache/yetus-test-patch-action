@@ -93,6 +93,7 @@ runs:
     - --plugins=${{ inputs.plugins }}
     - --project=${{ inputs.project }}
     - --pylint-requirements=true
+    - --pylint-use-user=false
     - --reapermode=${{ inputs.reapermode }}
     - --report-unknown-options=false
     - --revive-config=${{ inputs.reviveconfig }}
